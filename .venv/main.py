@@ -19,6 +19,10 @@ def init_game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    print('left...')
+#            elif event.type == pygame.KEYUP:
 
     pygame.quit()
 
