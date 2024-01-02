@@ -3,13 +3,18 @@ from pygame.constants import QUIT
 
 pygame.init()
 
-HEIGHT = 600 #800
-WIDTH = 800 #1200
+HEIGHT = 600  # 800
+WIDTH = 800  # 1200
+COLOR_WHITE = (255, 255, 255)
+COLOR_BLACK=(0,0,0)
+PLAYER_SIZE = (20, 20)
 
 main_display = pygame.display.set_mode((WIDTH, HEIGHT))
 
-player = pygame.Surface((20, 20))
-player.fill((255, 255, 255))
+player = pygame.Surface(PLAYER_SIZE)
+player.fill(COLOR_WHITE)
+player_rect = player.get_rect()
+player_speed = [1, 1]
 
 plaing = True
 while plaing:
@@ -17,6 +22,8 @@ while plaing:
         if event.type == QUIT:
             plaing = False
 
-    main_display.blit(player, (0, 0))
+    main_display.fill((COLOR_BLACK))
+    main_display.blit(player, player_rect)
+    player_rect=player_rect.move(player_speed)
 
     pygame.display.flip()
