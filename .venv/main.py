@@ -1,15 +1,15 @@
 import pygame
 from pygame.constants import QUIT
 
-pygame.init()
-FPS=pygame.time.Clock()
-
+'''константы'''
 HEIGHT = 600  # 800
 WIDTH = 800  # 1200
 COLOR_WHITE = (255, 255, 255)
 COLOR_BLACK=(0,0,0)
 PLAYER_SIZE = (20, 20)
 
+pygame.init()
+FPS=pygame.time.Clock()
 main_display = pygame.display.set_mode((WIDTH, HEIGHT))
 
 player = pygame.Surface(PLAYER_SIZE)
