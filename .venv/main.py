@@ -1,29 +1,15 @@
-import pygame, sys
+import pygame
 
-"""константы"""
-application_name = 'Game name'
-screen_x=800
-screen_y=600
+pygame.init()
 
-def init_game():
-    pygame.init()
-    screen = pygame.display.set_mode((screen_x, screen_y))
-    pygame.init()
-    pygame.display.set_caption(application_name)
+HEIGHT=1200
+WIDTH=800
 
-    run = True
-    while run:
-        screen.fill((192, 192, 192))
-        pygame.display.update()
-#        clock.tick(60)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
+main_display=pygame.display.set_mode((HEIGHT, WIDTH))
 
-    pygame.quit()
-
-def start_game():
-    pass
-
-init_game()
-start_game()
+count =0
+while True:
+    print("")
+    count+=1
+    if count>=100:
+        break
