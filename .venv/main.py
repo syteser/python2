@@ -31,7 +31,7 @@ while plaing:
     if player_rect.right>=WIDTH or player_rect.left<0:
         player_speed[0]=-player_speed[0]
 
+    '''рисуем игрока, смещаем игрока, обновляем экран'''
     main_display.blit(player, player_rect)
     player_rect=player_rect.move(player_speed)
-
     pygame.display.flip()
