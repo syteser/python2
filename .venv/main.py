@@ -2,6 +2,7 @@ import pygame
 from pygame.constants import QUIT
 
 pygame.init()
+FPS=pygame.time.Clock()
 
 HEIGHT = 600  # 800
 WIDTH = 800  # 1200
@@ -18,6 +19,7 @@ player_speed = [1, 1]
 
 plaing = True
 while plaing:
+    FPS.tick(120)
     for event in pygame.event.get():
         if event.type == QUIT:
             plaing = False
