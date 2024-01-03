@@ -23,18 +23,19 @@ player_move_up = [0, -1]
 player_move_right = [1, 0]
 player_move_left = [-1, 0]
 
+
 def create_enemy():
     eneme_size = (30, 30)
     enemy = pygame.Surface(eneme_size)
     enemy.fill(COLOR_BLUE)
-    enemy_rect = pygame.Rect(WIDTH, 100, *eneme_size)
-    enemy_move = [-1, 0]
-    return enemy, enemy_rect, enemy_move
+    enemy_rect = pygame.Rect(WIDTH, random.randint(0, HEIGHT), *eneme_size)
+    enemy_move = [random.randint(-6, -1), 0]
+    return [enemy, enemy_rect, enemy_move]
 
 
 CREATE_ENEMY = pygame.USEREVENT + 1
 pygame.time.set_timer(CREATE_ENEMY, 1500)
-enemies=[]
+enemies = []
 
 plaing = True
 while plaing:
@@ -42,7 +43,7 @@ while plaing:
     for event in pygame.event.get():
         if event.type == QUIT:
             plaing = False
-        if event.type==CREATE_ENEMY:
+        if event.type == CREATE_ENEMY:
             enemies.append(create_enemy())
 
     main_display.fill((COLOR_BLACK))
@@ -58,12 +59,16 @@ while plaing:
     if keys[K_LEFT] and player_rect.left > 0:
         player_rect = player_rect.move(player_move_left)
 
-#    enemy_rect = enemy_rect.move(enemy_move)
+    for enemy in enemies:
+        enemy[1] = enemy[1].move(enemy[2])
+        main_display.blit(enemy[0], enemy[1])
 
-    '''рисуем игрока, смещаем игрока, обновляем экран'''
     main_display.blit(player, player_rect)
-    main_display.blit(enemy, enemy_rect)
-    print(len(enemies))
-    #    player_rect = player_rect.move(player_speed)
     pygame.display.flip()
 
+    for enemy in enemies:
+        if enemy[1].left<0:
+            enemies.pop(enemies.index(enemy))
+
+
+    print(len(enemies))
