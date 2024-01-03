@@ -67,3 +67,4 @@ while plaing:
     print(len(enemies))
     #    player_rect = player_rect.move(player_speed)
     pygame.display.flip()
+
