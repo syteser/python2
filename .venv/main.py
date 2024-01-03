@@ -23,7 +23,6 @@ player_move_up = [0, -1]
 player_move_right = [1, 0]
 player_move_left = [-1, 0]
 
-
 def create_enemy():
     eneme_size = (30, 30)
     enemy = pygame.Surface(eneme_size)
