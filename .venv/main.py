@@ -1,4 +1,6 @@
 import pygame
+import random
+
 from pygame.constants import QUIT
 
 '''константы'''
@@ -19,17 +21,25 @@ player_speed = [1, 1]
 
 plaing = True
 while plaing:
-    FPS.tick(120)
+    FPS.tick(120 * 3)
     for event in pygame.event.get():
         if event.type == QUIT:
             plaing = False
 
     main_display.fill((COLOR_BLACK))
 
-    if player_rect.bottom >= HEIGHT or player_rect.top < 0:
-        player_speed[1] = -player_speed[1]
-    if player_rect.right >= WIDTH or player_rect.left < 0:
-        player_speed[0] = -player_speed[0]
+    #   if player_rect.bottom >= HEIGHT or player_rect.top < 0:
+    #       player_speed[1] = -player_speed[1]
+    #   if player_rect.right >= WIDTH or player_rect.left < 0:
+    #       player_speed[0] = -player_speed[0]
+    if player_rect.bottom >= HEIGHT:
+        player_speed = random.choice(([1, -1], [-1, -1]))
+    if player_rect.top <= 0:
+        player_speed = random.choice(([-1, 1], [1, 1]))
+    if player_rect.right >= WIDTH:
+        player_speed = random.choice(([-1, -1], [-1, 1]))
+    if player_rect.left <= 0:
+        player_speed = random.choice(([1, 1], [1, -1]))
 
     '''рисуем игрока, смещаем игрока, обновляем экран'''
     main_display.blit(player, player_rect)
