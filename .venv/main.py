@@ -11,36 +11,45 @@ COLOR_BLACK = (0, 0, 0)
 COLOR_BLUE = (0, 0, 255)
 COLOR_RED = (255, 0, 0)
 PLAYER_SIZE = (20, 20)
-FONT = pygame.font.SysFont('Verdana',20)
 
 pygame.init()
+
+FONT = pygame.font.SysFont('Verdana', 20)
 FPS = pygame.time.Clock()
 main_display = pygame.display.set_mode((WIDTH, HEIGHT))
 
+bg = pygame.transform.scale(pygame.image.load('background.png'), (WIDTH, HEIGHT))
+bg_X1 = 0
+bg_X2 = bg.get_width()
+bg_move = 3
+
 player = pygame.Surface(PLAYER_SIZE)
-player.fill(COLOR_WHITE)
+player_speed = bg_move + 1
+player.fill(COLOR_BLACK)
 player_rect = player.get_rect()
-player_move_down = [0, 1]
-player_move_up = [0, -1]
-player_move_right = [1, 0]
-player_move_left = [-1, 0]
+player_move_down = [0, player_speed]
+player_move_up = [0, -player_speed]
+player_move_right = [player_speed, 0]
+player_move_left = [-player_speed, 0]
 
 
 def create_enemy():
     eneme_size = (30, 30)
+    enemy_speed = bg_move
     enemy = pygame.Surface(eneme_size)
     enemy.fill(COLOR_BLUE)
     enemy_rect = pygame.Rect(WIDTH, random.randint(0, HEIGHT), *eneme_size)
-    enemy_move = [random.randint(-6, -1), 0]
+    enemy_move = [random.randint(-enemy_speed * 2, -enemy_speed), 0]
     return [enemy, enemy_rect, enemy_move]
 
 
 def create_bonus():
     bonus_size = (5, 5)
+    bonus_speed = bg_move
     bonus = pygame.Surface(bonus_size)
     bonus.fill(COLOR_RED)
     bonus_rect = pygame.Rect(random.randint(0, WIDTH), 0, *bonus_size)
-    bonus_move = [0, random.randint(3, 8)]
+    bonus_move = [0, random.randint(bonus_speed, bonus_speed * 2)]
     return [bonus, bonus_rect, bonus_move]
 
 
@@ -63,7 +72,17 @@ while plaing:
         if event.type == CREATE_BONUS:
             bonuses.append(create_bonus())
 
-    main_display.fill((COLOR_BLACK))
+    #   main_display.fill((COLOR_BLACK))
+    bg_X1 -= bg_move
+    bg_X2 -= bg_move
+
+    if bg_X1 < -bg.get_width():
+        bg_X1 = bg.get_width()
+    if bg_X2 < -bg.get_width():
+        bg_X2 = bg.get_width()
+
+    main_display.blit(bg, (bg_X1, 0))
+    main_display.blit(bg, (bg_X2, 0))
 
     keys = pygame.key.get_pressed()
 
@@ -86,9 +105,10 @@ while plaing:
         bonus[1] = bonus[1].move(bonus[2])
         main_display.blit(bonus[0], bonus[1])
         if player_rect.colliderect(bonus[1]):
+            score += 1
             bonuses.pop(bonuses.index(bonus))
 
-    main_display.blit(FONT.render(str(score), True, COLOR_WHITE), (WIDTH - 50, 20))
+    main_display.blit(FONT.render(str(score), True, COLOR_BLACK), (WIDTH - 50, 20))
     main_display.blit(player, player_rect)
     pygame.display.flip()
 
