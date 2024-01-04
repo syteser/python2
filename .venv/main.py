@@ -66,6 +66,7 @@ bonuses = []
 score = 0
 image_index = 0
 
+
 plaing = True
 while plaing:
     FPS.tick(120 * 3)
