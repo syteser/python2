@@ -11,6 +11,7 @@ COLOR_BLACK = (0, 0, 0)
 COLOR_BLUE = (0, 0, 255)
 COLOR_RED = (255, 0, 0)
 PLAYER_SIZE = (20, 20)
+FONT = pygame.font.SysFont('Verdana',20)
 
 pygame.init()
 FPS = pygame.time.Clock()
@@ -23,6 +24,7 @@ player_move_down = [0, 1]
 player_move_up = [0, -1]
 player_move_right = [1, 0]
 player_move_left = [-1, 0]
+
 
 def create_enemy():
     eneme_size = (30, 30)
@@ -37,9 +39,10 @@ def create_bonus():
     bonus_size = (5, 5)
     bonus = pygame.Surface(bonus_size)
     bonus.fill(COLOR_RED)
-    bonus_rect = pygame.Rect(random.randint(0, WIDTH), 0, * bonus_size)
+    bonus_rect = pygame.Rect(random.randint(0, WIDTH), 0, *bonus_size)
     bonus_move = [0, random.randint(3, 8)]
     return [bonus, bonus_rect, bonus_move]
+
 
 CREATE_ENEMY = pygame.USEREVENT + 1
 CREATE_BONUS = CREATE_ENEMY + 1
@@ -47,6 +50,7 @@ pygame.time.set_timer(CREATE_ENEMY, 1500)
 pygame.time.set_timer(CREATE_BONUS, 250)
 enemies = []
 bonuses = []
+score = 0
 
 plaing = True
 while plaing:
@@ -75,10 +79,16 @@ while plaing:
     for enemy in enemies:
         enemy[1] = enemy[1].move(enemy[2])
         main_display.blit(enemy[0], enemy[1])
+        if player_rect.colliderect(enemy[1]):
+            plaing = False
+
     for bonus in bonuses:
         bonus[1] = bonus[1].move(bonus[2])
         main_display.blit(bonus[0], bonus[1])
+        if player_rect.colliderect(bonus[1]):
+            bonuses.pop(bonuses.index(bonus))
 
+    main_display.blit(FONT.render(str(score), True, COLOR_WHITE), (WIDTH - 50, 20))
     main_display.blit(player, player_rect)
     pygame.display.flip()
 
@@ -90,4 +100,4 @@ while plaing:
         if bonus[1].bottom > HEIGHT:
             bonuses.pop(bonuses.index(bonus))
 
-    print(len(bonuses), " ", len(enemies))
+#    print(len(bonuses), " ", len(enemies))
