@@ -24,7 +24,6 @@ player_move_up = [0, -1]
 player_move_right = [1, 0]
 player_move_left = [-1, 0]
 
-
 def create_enemy():
     eneme_size = (30, 30)
     enemy = pygame.Surface(eneme_size)
@@ -41,7 +40,6 @@ def create_bonus():
     bonus_rect = pygame.Rect(random.randint(0, WIDTH), 0, * bonus_size)
     bonus_move = [0, random.randint(3, 8)]
     return [bonus, bonus_rect, bonus_move]
-
 
 CREATE_ENEMY = pygame.USEREVENT + 1
 CREATE_BONUS = CREATE_ENEMY + 1
@@ -89,6 +87,7 @@ while plaing:
             enemies.pop(enemies.index(enemy))
 
     for bonus in bonuses:
-        print(bonus[1])
         if bonus[1].bottom > HEIGHT:
             bonuses.pop(bonuses.index(bonus))
+
+    print(len(bonuses), " ", len(enemies))
