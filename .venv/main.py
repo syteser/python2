@@ -1,7 +1,7 @@
-import pygame
-import random
 import os
+import random
 
+import pygame
 from pygame.constants import QUIT, K_DOWN, K_UP, K_LEFT, K_RIGHT
 
 '''константы'''
@@ -35,6 +35,7 @@ player_move_up = [0, -player_speed]
 player_move_right = [player_speed, 0]
 player_move_left = [-player_speed, 0]
 
+
 def create_enemy():
     eneme_size = (30, 30)
     enemy_speed = bg_move
@@ -45,6 +46,7 @@ def create_enemy():
     enemy_move = [random.randint(-enemy_speed * 2, -enemy_speed), 0]
     return [enemy, enemy_rect, enemy_move]
 
+
 def create_bonus():
     bonus_size = (5, 5)
     bonus_speed = bg_move
@@ -54,12 +56,13 @@ def create_bonus():
     bonus_move = [0, random.randint(bonus_speed, bonus_speed * 2)]
     return [bonus, bonus_rect, bonus_move]
 
+
 CREATE_ENEMY = pygame.USEREVENT + 1
 pygame.time.set_timer(CREATE_ENEMY, 1500)
-CREATE_BONUS = CREATE_ENEMY + 1
+CREATE_BONUS = pygame.USEREVENT + 2
 pygame.time.set_timer(CREATE_BONUS, 250)
 CHANGE_IMAGE = pygame.USEREVENT + 3
-pygame.time.set_timer(CHANGE_IMAGE, 200)
+pygame.time.set_timer(CHANGE_IMAGE, 100)
 
 enemies = []
 bonuses = []
