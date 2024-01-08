@@ -6,7 +6,7 @@ from pygame.constants import QUIT, K_DOWN, K_UP, K_LEFT, K_RIGHT
 
 '''константы'''
 HEIGHT = 600  # 800
-WIDTH = 800  # 1200
+WIDTH = 1000  # 1200
 COLOR_WHITE = (255, 255, 255)
 COLOR_BLACK = (0, 0, 0)
 COLOR_BLUE = (0, 0, 255)
@@ -23,11 +23,11 @@ bg_X1 = 0
 bg_X2 = bg.get_width()
 bg_move = 3
 
-IMAGE_PATH = "Goose"
-PLAYER_IMAGES = os.listdir(IMAGE_PATH)
+# IMAGE_PATH = "Goose"
+# PLAYER_IMAGES = os.listdir(IMAGE_PATH)
 
-player_size = (20, 20)
-player = pygame.image.load('player.png').convert_alpha()
+player_size = (100, 50)
+player = pygame.transform.scale(pygame.image.load('player.png').convert_alpha(), player_size)
 player_speed = bg_move + 1
 player_rect = player.get_rect()
 player_move_down = [0, player_speed]
@@ -37,20 +37,21 @@ player_move_left = [-player_speed, 0]
 
 
 def create_enemy():
-    eneme_size = (30, 30)
+    eneme_size = (50, 30)
     enemy_speed = bg_move
-    enemy = pygame.image.load('enemy.png').convert_alpha()
-    #    enemy.fill(COLOR_BLUE)
+    #    enemy = pygame.image.load('enemy.png').convert_alpha()
+    enemy = pygame.transform.scale(pygame.image.load('enemy.png'), eneme_size)
     enemy_sdvig = 100
     enemy_rect = pygame.Rect(WIDTH, random.randint(enemy_sdvig, HEIGHT - enemy_sdvig), *eneme_size)
-    enemy_move = [random.randint(-enemy_speed * 2, -enemy_speed), 0]
+    enemy_move = [random.randint(-enemy_speed * 4, -enemy_speed * 2), 0]
     return [enemy, enemy_rect, enemy_move]
 
 
 def create_bonus():
-    bonus_size = (5, 5)
+    bonus_size = (30, 30)
     bonus_speed = bg_move
-    bonus = pygame.image.load('bonus.png').convert_alpha()
+    #   bonus = pygame.image.load('bonus.png').convert_alpha()
+    bonus = pygame.transform.scale(pygame.image.load('bonus.png'), bonus_size)
     bonus_sdvig = 100
     bonus_rect = pygame.Rect(random.randint(bonus_sdvig, WIDTH - bonus_sdvig), 0, *bonus_size)
     bonus_move = [0, random.randint(bonus_speed, bonus_speed * 2)]
@@ -79,11 +80,11 @@ while plaing:
             enemies.append(create_enemy())
         if event.type == CREATE_BONUS:
             bonuses.append(create_bonus())
-        if event.type == CHANGE_IMAGE:
-            player = pygame.image.load(os.path.join(IMAGE_PATH, PLAYER_IMAGES[image_index]))
-            image_index += 1
-            if image_index >= len(PLAYER_IMAGES):
-                image_index = 0
+    #        if event.type == CHANGE_IMAGE:
+    #            player = pygame.image.load(os.path.join(IMAGE_PATH, PLAYER_IMAGES[image_index]))
+    #            image_index += 1
+    #            if image_index >= len(PLAYER_IMAGES):
+    #                image_index = 0
 
     #   main_display.fill((COLOR_BLACK))
     bg_X1 -= bg_move
@@ -112,7 +113,9 @@ while plaing:
         enemy[1] = enemy[1].move(enemy[2])
         main_display.blit(enemy[0], enemy[1])
         if player_rect.colliderect(enemy[1]):
-            plaing = False
+            score -= 100
+            enemies.pop(enemies.index(enemy))
+            # plaing = False
 
     for bonus in bonuses:
         bonus[1] = bonus[1].move(bonus[2])
