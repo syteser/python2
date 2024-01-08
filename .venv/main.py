@@ -61,7 +61,7 @@ def create_bonus():
 CREATE_ENEMY = pygame.USEREVENT + 1
 pygame.time.set_timer(CREATE_ENEMY, 1500)
 CREATE_BONUS = pygame.USEREVENT + 2
-pygame.time.set_timer(CREATE_BONUS, 250)
+pygame.time.set_timer(CREATE_BONUS, 4)
 CHANGE_IMAGE = pygame.USEREVENT + 3
 pygame.time.set_timer(CHANGE_IMAGE, 100)
 
@@ -127,7 +127,7 @@ while plaing:
 
     '''вывод очков'''
     text_score = 'Счет: ' + str(score)
-    main_display.blit(FONT.render(text_score, True, COLOR_BLACK), (WIDTH - 100, 20))
+    main_display.blit(FONT.render(text_score, True, COLOR_BLACK), (WIDTH - len(text_score)*10-30, 20))
     '''вывод игрока'''
     main_display.blit(player, player_rect)
     pygame.display.flip()
