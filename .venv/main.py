@@ -23,8 +23,8 @@ bg_X1 = 0
 bg_X2 = bg.get_width()
 bg_move = 3
 
-# IMAGE_PATH = "Goose"
-# PLAYER_IMAGES = os.listdir(IMAGE_PATH)
+IMAGE_PATH = "Goose"
+PLAYER_IMAGES = os.listdir(IMAGE_PATH)
 
 player_size = (100, 50)
 player = pygame.transform.scale(pygame.image.load('player.png').convert_alpha(), player_size)
@@ -80,11 +80,12 @@ while plaing:
             enemies.append(create_enemy())
         if event.type == CREATE_BONUS:
             bonuses.append(create_bonus())
-    #        if event.type == CHANGE_IMAGE:
-    #            player = pygame.image.load(os.path.join(IMAGE_PATH, PLAYER_IMAGES[image_index]))
-    #            image_index += 1
-    #            if image_index >= len(PLAYER_IMAGES):
-    #                image_index = 0
+        if event.type == CHANGE_IMAGE:
+            player = pygame.transform.scale(pygame.image.load(os.path.join(IMAGE_PATH, PLAYER_IMAGES[image_index])),
+                                            player_size)
+            image_index += 1
+            if image_index >= len(PLAYER_IMAGES):
+                image_index = 0
 
     #   main_display.fill((COLOR_BLACK))
     bg_X1 -= bg_move
@@ -124,7 +125,10 @@ while plaing:
             score += 1
             bonuses.pop(bonuses.index(bonus))
 
-    main_display.blit(FONT.render(str(score), True, COLOR_BLACK), (WIDTH - 50, 20))
+    '''вывод очков'''
+    text_score = 'Счет: ' + str(score)
+    main_display.blit(FONT.render(text_score, True, COLOR_BLACK), (WIDTH - 100, 20))
+    '''вывод игрока'''
     main_display.blit(player, player_rect)
     pygame.display.flip()
 
